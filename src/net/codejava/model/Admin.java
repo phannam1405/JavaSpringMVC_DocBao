@@ -19,7 +19,7 @@ public class Admin {
 	@Column(name = "admin_id")
 	private Integer admin_id;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true)	
 	private String email;
 
 	@Column(name = "password")

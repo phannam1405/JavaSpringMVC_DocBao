@@ -46,7 +46,7 @@
                   </div>
 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Login</button>
                   </div>
 
                   <c:if test="${not empty error}">
@@ -54,9 +54,10 @@
                       ${error}
                     </div>
                   </c:if>
+                  <p class="mb-2 text-muted">Don't have an account ?
+                    <a href="${pageContext.request.contextPath}/admin/register" class="text-primary fw-bold">Register here</a>
+                  </p>
 
-                  <a href="#!" class="small text-muted">Terms of use.</a>
-                  <a href="#!" class="small text-muted">Privacy policy</a>
                 </form>
 
               </div>

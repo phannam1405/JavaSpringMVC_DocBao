@@ -15,6 +15,18 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepo;
     
+    public boolean emailExists(String email) {
+        return adminRepo.findByEmail(email) != null;
+    }
+    
+    public void register(Admin admin) {
+    	adminRepo.save(admin);
+    }
+    
+    public boolean phoneExists(String phone) {
+        return adminRepo.findByPhone(phone) != null;
+    }
+    
     public Admin login(String email, String password) {
         return adminRepo.findByEmailAndPassword(email, password);
     }
