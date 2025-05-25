@@ -25,9 +25,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/WEB-INF/resources/");
+                .addResourceLocations("/resources/");
+        registry.addResourceHandler("/uploads/**")
+        .addResourceLocations("file:/D:/java_web_doc_bao/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/TheNews/resources/uploads/");
     }
+    
+    
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();

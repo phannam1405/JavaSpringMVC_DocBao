@@ -7,9 +7,9 @@
 <!-- Cấu hình kết nối database cho JPA -->
 <persistence-unit name="TheNews">
  <properties>
-  <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/java_web_doc_bao"/>
+  <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/java_web_doc_bao"/>
   <property name="javax.persistence.jdbc.user" value="root"/>
-  <property name="javax.persistence.jdbc.password" value="Thachk23vku."/>
+  <property name="javax.persistence.jdbc.password" value="123456"/>
   <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
   
   <property name="hibernate.show_sql" value="true"/>

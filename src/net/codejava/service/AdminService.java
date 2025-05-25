@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.codejava.model.Admin;
+import net.codejava.model.Article;
 import net.codejava.repository.AdminRepository;
 
 @Service
@@ -21,6 +22,10 @@ public class AdminService {
     
     public void register(Admin admin) {
     	adminRepo.save(admin);
+    }
+    
+    public List<Admin> listAll() {
+        return adminRepo.findAll();
     }
     
     public boolean phoneExists(String phone) {

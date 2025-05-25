@@ -1,6 +1,7 @@
 package net.codejava.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.model.Admin;
+import net.codejava.model.Article;
 import net.codejava.service.AdminService;
+import net.codejava.service.ArticleService;
+import net.codejava.service.CategoryService;
 
 @Controller
 @RequestMapping("/admin")
@@ -20,6 +24,14 @@ public class AdminLoginController {
     
     @Autowired
     private AdminService adminService;
+    
+    @Autowired
+    private ArticleService articleService;
+    
+    
+    @Autowired
+    private CategoryService categoryService;
+    
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView showRegisterPage(HttpSession session) {
@@ -128,7 +140,14 @@ public class AdminLoginController {
 
         System.out.println("Đã đăng nhập với: " + admin.getFullName());
         ModelAndView mav = new ModelAndView("admin/dashboard");
+       
         mav.addObject("message", "Hello " + admin.getFullName());
+        
+        List<Article> articles = articleService.listAll();
+        List<Admin> admins = adminService.listAll();
+        mav.addObject("articles", articles);
+        mav.addObject("admins", admins);
+        mav.addObject("categories", categoryService.getAllCategories());
         return mav;
     }
 
