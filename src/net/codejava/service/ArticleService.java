@@ -32,6 +32,10 @@ public class ArticleService {
         return articleRepo.findById(id).get();
     }
     
+    public List<Article> findByCategoryId(int categoryId, int excludeId) {
+        return articleRepo.findByCategoryId(categoryId, excludeId);
+    }
+    
  
     public List<Article> searchArticles(String title, Date createdAt, Integer adminId, Integer categoryId) {
         return articleRepo.searchArticles(title, createdAt, adminId, categoryId);

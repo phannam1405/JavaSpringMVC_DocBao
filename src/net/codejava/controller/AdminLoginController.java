@@ -50,7 +50,7 @@ public class AdminLoginController {
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String confirmPassword,
-            @RequestParam String phone,  // Thêm tham số phone
+            @RequestParam String phone,  
             HttpSession session) {
 
         System.out.println("POST /admin/register");
@@ -72,8 +72,8 @@ public class AdminLoginController {
             return mav;
         }
 
-        if (adminService.phoneExists(phone)) {  // Thêm kiểm tra số điện thoại
-            System.out.println("Số điện thoại đã tồn tại: " + phone);
+        if (adminService.phoneExists(phone)) {  
+        	System.out.println("Số điện thoại đã tồn tại: " + phone);
             ModelAndView mav = new ModelAndView("admin/register");
             mav.addObject("error", "Phone number already exists");
             return mav;
@@ -83,7 +83,7 @@ public class AdminLoginController {
         admin.setFullName(fullname);
         admin.setEmail(email);
         admin.setPassword(password);
-        admin.setPhone(phone);  // Thiết lập số điện thoại
+        admin.setPhone(phone); 
 
 
         adminService.register(admin);
