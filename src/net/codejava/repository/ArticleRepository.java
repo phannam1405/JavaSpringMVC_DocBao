@@ -21,6 +21,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer>{
     @Query("SELECT a FROM Article a WHERE a.breakingNews = 1 ORDER BY a.createdAt DESC")
     List<Article> findBreakingNews();
     
+    //tìm kiếm trong admin
     @Query("SELECT a FROM Article a WHERE " +
            "(:title IS NULL OR a.title LIKE %:title%) AND " +
            "(:createdAt IS NULL OR a.createdAt = :createdAt) AND " +
@@ -31,4 +32,12 @@ public interface ArticleRepository extends CrudRepository<Article, Integer>{
             @Param("createdAt") java.util.Date createdAt,
             @Param("adminId") Integer adminId,
             @Param("categoryId") Integer categoryId);
+    
+    
+    // tìm kiếm trong client
+    @Query("SELECT a FROM Article a WHERE " +
+            "(LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%'))) OR " +
+            "(LOWER(a.category.categoryName) LIKE LOWER(CONCAT('%', :keyword, '%'))) OR " +
+            "(LOWER(a.admin.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+     List<Article> searchAllFields(@Param("keyword") String keyword);
 }

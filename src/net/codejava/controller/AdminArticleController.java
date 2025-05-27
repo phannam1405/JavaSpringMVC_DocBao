@@ -218,7 +218,7 @@ public class AdminArticleController {
 	}
 	
 	//tìm kiếm
-	// Thêm vào AdminArticleController.java
+
 	@GetMapping("/searchArticles")
 	public ModelAndView searchArticles(
 	        @RequestParam(value = "title", required = false) String title,

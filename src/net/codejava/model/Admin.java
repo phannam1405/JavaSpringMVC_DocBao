@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -33,6 +34,11 @@ public class Admin {
 	
 	@Column(name = "created_at")
 	private Date createdAt;
+	
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date(System.currentTimeMillis());
+    }
 	
 	public Admin() {
 		

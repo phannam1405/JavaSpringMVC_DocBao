@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -79,6 +80,11 @@ public class User {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date(System.currentTimeMillis());
+    }
 
 	public User(Integer user_id, String email, String password, String fullName, String phone, Date createdAt) {
 		this.user_id = user_id;
@@ -89,7 +95,9 @@ public class User {
 		this.createdAt = createdAt;
 	}
 
-	
+	public User() {
+		
+	}
 	
 	
 }

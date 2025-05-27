@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
         registry.addResourceHandler("/uploads/**")
-        .addResourceLocations("file:/E:/VKU/JAVA/Project_web/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/JavaSpringMVC_DocBao/resources/uploads/");
+        .addResourceLocations("file:/D:/java_web_doc_bao/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/TheNews/resources/uploads/");
 
     }
     
