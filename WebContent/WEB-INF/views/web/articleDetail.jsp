@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="layout/header.jsp"%>
 
 <style>
@@ -85,7 +88,6 @@
         text-align: justify;
     }
     
-    /* Sidebar links */
     .sidebar-item {
         margin-bottom: 15px;
         padding: 10px;
@@ -121,6 +123,7 @@
         border-radius: 5px;
         font-size: 14px;
         resize: vertical;
+        box-sizing: border-box;
     }
     
     .comment-form button {
@@ -138,21 +141,32 @@
         background-color: #0056b3;
     }
     
+    .comment-form button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+    }
+    
     /* Comment list */
     .comment-item {
         border-bottom: 1px solid #dee2e6;
         padding-bottom: 15px;
         margin-bottom: 15px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     .comment-author {
         font-weight: bold;
         color: #333;
+        margin-bottom: 5px;
     }
     
     .comment-text {
         margin: 8px 0;
         line-height: 1.6;
+        color: #555;
     }
     
     .comment-time {
@@ -160,16 +174,61 @@
         color: #666;
     }
     
-	    .main-content, 
-	.main-content * {
-	    color: #333 !important;
-	    line-height: 1.6 !important;
-	}
-	
-	.main-content img {
-	    max-width: 100%;
-	    height: auto;
-	}
+    .main-content, 
+    .main-content * {
+        color: #333 !important;
+        line-height: 1.6 !important;
+    }
+    
+    .main-content img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Alert styling */
+    .alert {
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    
+    .alert-warning {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+    
+    .alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+    
+    .alert a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .alert a:hover {
+        text-decoration: underline;
+    }
+    
+    .no-comments {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+    }
     
     /* Responsive */
     @media (max-width: 768px) {
@@ -197,59 +256,84 @@
     <!-- Content Wrapper - 2 columns -->
     <div class="content-wrapper">
         <!-- Nội dung bài báo - Left Column -->
-		<div class="main-content">
-		    <p style='font-size:32px'>${article.title}</p>
-		    <div style="max-height: 500px; overflow-y: auto;">
-		        ${article.content}
-		    </div>
-		</div>
+        <div class="main-content">
+            <p style='font-size:32px'>${article.title}</p>
+            <div style="max-height: 500px; overflow-y: auto;">
+                ${article.content}
+            </div>
+        </div>
         
         <!-- Các bài báo khác - Right Column -->
         <div class="sidebar">
-		    <div class="sidebar-title">Các bài báo cùng chuyên mục</div>
-		    <c:forEach items="${relatedArticles}" var="related">
-		        <div class="sidebar-item">
-		            <a href="detail?id=${related.article_id}">
-		                📰 ${related.title}
-		            </a>
-		        </div>
-		    </c:forEach>
-		    
-		    <c:if test="${empty relatedArticles}">
-		        <div class="sidebar-item">
-		            <p>Không có bài viết nào khác trong chuyên mục này</p>
-		        </div>
-		    </c:if>
-		</div>
+            <div class="sidebar-title">Các bài báo cùng chuyên mục</div>
+            <c:forEach items="${relatedArticles}" var="related">
+                <div class="sidebar-item">
+                    <a href="detail?id=${related.article_id}">
+                        📰 ${related.title}
+                    </a>
+                </div>
+            </c:forEach>
+            
+            <c:if test="${empty relatedArticles}">
+                <div class="sidebar-item">
+                    <p>Không có bài viết nào khác trong chuyên mục này</p>
+                </div>
+            </c:if>
+        </div>
     </div>
     
     <!-- Comment Section - Full Width -->
     <div class="comment-section">
-        <div class="comment-title">Comment</div>
+        <div class="comment-title">Bình luận (${fn:length(comments)})</div>
+        
+        <!-- Hiển thị thông báo -->
+        <c:if test="${not empty success}">
+            <div class="alert alert-success">${success}</div>
+        </c:if>
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger">${error}</div>
+        </c:if>
         
         <!-- Comment Form -->
         <div class="comment-form">
-            <textarea rows="4" placeholder="Viết bình luận của bạn..."></textarea>
-            <button type="button">Gửi bình luận</button>
+            <c:choose>
+                <c:when test="${empty sessionScope.user}">
+                    <div class="alert alert-warning">
+                        Bạn cần <a href="${pageContext.request.contextPath}/login">đăng nhập</a> để có thể bình luận.
+                    </div>
+                    <textarea rows="4" placeholder="Đăng nhập để bình luận..." disabled></textarea>
+                    <button type="button" disabled>Đăng nhập để bình luận</button>
+                </c:when>
+                <c:otherwise>
+                    <form action="${pageContext.request.contextPath}/detail/comment" method="post">
+                        <input type="hidden" name="articleId" value="${article.article_id}">
+                        <textarea name="content" rows="4" placeholder="Viết bình luận của bạn..." required></textarea>
+                        <button type="submit">Gửi bình luận</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
         </div>
         
         <!-- Existing Comments -->
         <div class="comment-list">
-            <div class="comment-item">
-                <div class="comment-author">Nguyễn Văn A</div>
-                <div class="comment-text">Bài viết rất hay và bổ ích! Cảm ơn tác giả đã chia sẻ những thông tin quý giá.</div>
-                <div class="comment-time">2 giờ trước</div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-author">Trần Thị B</div>
-                <div class="comment-text">Thông tin rất hữu ích, tôi đã học được nhiều điều mới từ bài viết này.</div>
-                <div class="comment-time">1 giờ trước</div>
-            </div>
-            <div class="comment-item">
-                <div class="comment-author">Lê Văn C</div>
-                <div class="comment-text">Rất mong được đọc thêm những bài viết tương tự trong tương lai.</div>
-                <div class="comment-time">30 phút trước</div>
-            </div>
+            <c:choose>
+                <c:when test="${not empty comments}">
+                    <c:forEach items="${comments}" var="comment">
+                        <div class="comment-item">
+                            <div class="comment-author">${comment.userID.fullName}</div>
+                            <div class="comment-text">${comment.content}</div>
+                            <div class="comment-time">
+                                <fmt:formatDate value="${comment.createdAt}" pattern="dd/MM/yyyy HH:mm" />
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <div class="no-comments">
+                        Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>

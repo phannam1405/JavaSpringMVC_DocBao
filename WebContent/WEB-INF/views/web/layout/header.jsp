@@ -114,10 +114,7 @@
 		<div class="logo">THE NEWS</div>
 		<nav>
 			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#sportsNews">Sports</a></li>
-				<li><a href="#businessNews">Business</a></li>
-				<li><a href="#techNews">Technology</a></li>
+				<li><a href="/TheNews">Home</a></li>
 			</ul>
 			<form action="${pageContext.request.contextPath}/search" method="get"
 				class="search-form">

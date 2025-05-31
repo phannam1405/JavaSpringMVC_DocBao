@@ -6,16 +6,13 @@
 <meta charset="UTF-8">
 <title>Login - The News</title>
 
-<!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<!-- MDBootstrap CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet">
 
 <style>
   body {
-    background-color: #508bfc;
+    background-color: #25252a;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
@@ -68,7 +65,7 @@
         <div class="card shadow">
           <div class="card-body p-5 text-center">
 
-            <h3 class="mb-4">Sign in</h3>
+            <h3 class="mb-4">Sign In</h3>
 
             <form action="login" method="post">
               <div class="form-outline mb-4">
@@ -80,7 +77,7 @@
                 <input type="password" id="typePassword" name="password" class="form-control form-control-lg" required />
                 <label class="form-label" for="typePassword">Password</label>
               </div>
-
+              
               <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Login</button>
             </form>
                 <c:if test="${not empty error}">
@@ -89,7 +86,7 @@
                     </div>
                   </c:if>
             <div class="signup-link">
-              <p class="mt-4">Don't have an account? <a href="${pageContext.request.contextPath}/register">Sign up here</a></p>
+              <p class="mt-4">Chưa có tài khoản phải hơm? <a href="${pageContext.request.contextPath}/register">Sign up here</a></p>
             </div>
 
           </div>
@@ -99,9 +96,7 @@
   </div>
 </section>
 
-<!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- MDBootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 </body>
 </html>

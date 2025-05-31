@@ -9,8 +9,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            background: #25252a;
             min-height: 100vh;
+            padding : 0px 40px
         }
         .register-container {
             background-color: #fff;
@@ -18,7 +19,7 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             padding: 40px 30px;
             max-width: 550px;
-            width: 100%;
+            width: 80%;
         }
         .register-header {
             text-align: center;
@@ -44,7 +45,6 @@
             background: #5a6268;
         }
         .login-link {
-            color: #6c757d;
             font-weight: 500;
             text-decoration: none;
         }
@@ -57,51 +57,43 @@
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="register-container">
             <div class="register-header">
-                <img src="https://cdn-icons-png.flaticon.com/512/6681/6681204.png" alt="Register Icon">
-                <h3 class="mt-2">Đăng ký tài khoản</h3>
-                <p class="text-muted">Tạo tài khoản để bắt đầu trải nghiệm</p>
+                <h3 class="mb-4">Sign Up</h3>
             </div>
             <form action="${pageContext.request.contextPath}/register" method="post">
                 <div class="mb-3">
-                    <label for="fullName" class="form-label">Họ và tên</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" class="form-control" id="fullName" name="fullname" placeholder="Nhập họ và tên" required>
+                        <input type="text" class="form-control form-control-lg" id="fullName" name="fullname" placeholder="Nhập họ và tên" required>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Nhập email" required>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Số điện thoại</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                        <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Nhập mật khẩu" required>
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
-                    <div class="form-text">Mật khẩu phải có ít nhất 8 ký tự</div>
                 </div>
                 <div class="mb-4">
-                    <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                        <input type="password" class="form-control form-control-lg" name="confirmPassword" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-register w-100 mb-3">Đăng ký</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Đăng ký</button>
                 <div class="text-center">
                     <p>Đã có tài khoản? <a href="${pageContext.request.contextPath}/login" class="login-link">Đăng nhập ngay</a></p>
                 </div>
@@ -110,8 +102,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Toggle hiển thị mật khẩu
         document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
@@ -124,7 +116,7 @@
             }
         });
 
-        // Kiểm tra mật khẩu khớp
+
         document.querySelector('form').addEventListener('submit', function (e) {
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -134,5 +126,6 @@
             }
         });
     </script>
+    
 </body>
 </html>

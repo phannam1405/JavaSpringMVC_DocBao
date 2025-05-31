@@ -33,8 +33,6 @@ public class Article {
 	@Column(name = "short_content")
 	private String shortContent;
 
-
-
 	@Column(name = "content")
 	private String content;
 	

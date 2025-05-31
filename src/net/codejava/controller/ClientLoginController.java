@@ -20,6 +20,9 @@ public class ClientLoginController {
 	
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 	
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView showLoginPage(HttpSession session) {
@@ -71,30 +74,28 @@ public class ClientLoginController {
             @RequestParam String phone,  
             HttpSession session) {
 
-
-
         if (!password.equals(confirmPassword)) {
             System.out.println("Mật khẩu không khớp");
             ModelAndView mav = new ModelAndView("web/register");
-            mav.addObject("error", "Password and Confirm Password do not match");
+            mav.addObject("error", "Mật khẩu và xác nhận mật khẩu không giống nhau");
             return mav;
         }
 
         if (userService.emailExists(email)) {
             System.out.println("Email đã tồn tại: " + email);
             ModelAndView mav = new ModelAndView("web/register");
-            mav.addObject("error", "Email already exists");
+            mav.addObject("error", "Email đã được sử dụng");
             return mav;
         }
 
         if (userService.phoneExists(phone)) {  
-        	System.out.println("Số điện thoại đã tồn tại: " + phone);
+            System.out.println("Số điện thoại đã tồn tại: " + phone);
             ModelAndView mav = new ModelAndView("web/register");
-            mav.addObject("error", "Phone number already exists");
+            mav.addObject("error", "Số điện thoại đã được sử dụng");
             return mav;
         }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-     // Mã hóa mật khẩu
+        
+        // Mã hóa mật khẩu
         String hashedPassword = passwordEncoder.encode(password);
         
         User user = new User();
@@ -102,7 +103,6 @@ public class ClientLoginController {
         user.setEmail(email);
         user.setPassword(hashedPassword);
         user.setPhone(phone); 
-
 
         userService.register(user);
         System.out.println("Đăng ký thành công cho: " + email);

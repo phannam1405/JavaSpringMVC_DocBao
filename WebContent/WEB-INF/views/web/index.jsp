@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="layout/header.jsp"%>
-
-
 
 <div class="topHeadlines">
 	
@@ -26,13 +25,8 @@
 						</c:otherwise>
 					</c:choose>
 				</c:when>
-				<c:otherwise>
-					<!-- Ảnh mặc định -->
-					<img src="${pageContext.request.contextPath}/resources/images/default-news.jpg" alt="default image">
-				</c:otherwise>
 			</c:choose>
 		</div>
-		
 		
 		<div class="text" id="breakingNews">
 			<div class="title">
@@ -42,7 +36,6 @@
 						   style="color: white; text-decoration: none">
 						   ${breakingNews.title}
 						</a>
-
 					</c:when>
 					<c:otherwise>
 						Tiêu đề
@@ -62,14 +55,12 @@
 		</div>
 	</div>
 	
-	
 	<!-- Tin hot -->
 	<div class="right">
 		<div class="title">
 			<h2>Top Headlines</h2>
 		</div>
 		<div class="topNews">
-		
 			<c:choose>
 				<c:when test="${not empty topHeadlines}">
 					<c:forEach var="article" items="${topHeadlines}">
@@ -96,7 +87,7 @@
 							</div>
 							<div class="text">
 								<div class="title">
-									<a href="detail?id=${article.article_id}"  style="color: white; text-decoration: none">
+									<a href="detail?id=${article.article_id}" style="color: white; text-decoration: none">
 										${article.title}
 									</a>
 								</div>
@@ -116,154 +107,66 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-
 		</div>
-
 	</div>
 </div>
-
 
 <div class="page2">
-	<div class="news" id="sportsNews">
-		<div class="title">
-			<h2>Sports News</h2>
-		</div>
-		<div class="newsBox">
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
+	<!-- Hiển thị động 3 thể loại có nhiều bài nhất -->
+	<c:forEach var="category" items="${topCategories}">
+		<c:set var="categoryKey" value="${fn:toLowerCase(fn:replace(category.categoryName, ' ', ''))}" />
+		<div class="news" id="${categoryKey}News">
+			<div class="title">
+				<h2>${category.categoryName} News</h2>
 			</div>
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
+			<div class="newsBox">
+				<c:choose>
+					<c:when test="${not empty categoryArticles[categoryKey]}">
+						<c:forEach var="article" items="${categoryArticles[categoryKey]}">
+							<div class="newsCard">
+								<div class="img">
+									<c:choose>
+										<c:when test="${not empty article.image}">
+											<c:choose>
+												<c:when test="${article.image.startsWith('http')}">
+													<img src="${article.image}" alt="${article.title}">
+												</c:when>
+												<c:otherwise>
+													<img src="${pageContext.request.contextPath}/uploads/${article.image}" alt="${article.title}">
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<img src="${pageContext.request.contextPath}/resources/images/default-news.jpg" alt="default image">
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="text">
+									<div class="title">
+										<a href="detail?id=${article.article_id}" target="_blank">
+											<p>${article.title}</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="newsCard">
+							<div class="img">
+								<img src="${pageContext.request.contextPath}/resources/images/no-news.jpg" alt="no news">
+							</div>
+							<div class="text">
+								<div class="title">
+									<p>Chưa có bài viết trong thể loại này</p>
+								</div>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-	</div>
-	<div class="news" id="businessNews">
-		<div class="title">
-			<h2>Business News</h2>
-		</div>
-		<div class="newsBox">
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="news" id="techNews">
-		<div class="title">
-			<h2>Technology News</h2>
-		</div>
-		<div class="newsBox">
-			<div class="newsCard">
-				<div class="img">
-					<img
-						src="https://i.tribune.com.pk/media/images/macron1739300215-0/macron1739300215-0.jpg"
-						alt="top news image">
-				</div>
-				<div class="text">
-					<div class="title">
-						<a
-							href="https://tribune.com.pk/story/2545818/eu-preparing-new-sanctions-against-russia-sanctions-french-president"
-							target="_blank"><p>EU preparing new sanctions against
-								Russia: French president</p></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	</c:forEach>
 </div>
+
 <%@ include file="layout/footer.jsp"%>
